@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
+const Development = lazy(() => import('./Development').then(module => ({ default: module.Development })));
 import { useI18n } from './hooks/useI18n';
 import { I18nProvider } from './i18n';
 import { ThemeProvider, useTheme } from './hooks/useTheme';
@@ -17,6 +18,16 @@ const PortfolioLayout: React.FC = () => {
   const { theme } = useTheme();
   const { t } = useI18n();
   const isDark = theme === 'dark';
+  const [development, setDevelopment] = useState(window.location.hash.startsWith('#/development'));
+  useEffect(() => {
+    const onRoute = () => { setDevelopment(window.location.hash.startsWith('#/development')); window.scrollTo(0, 0); };
+    window.addEventListener('hashchange', onRoute);
+    return () => window.removeEventListener('hashchange', onRoute);
+  }, []);
+  useEffect(() => {
+    if (development) document.title = 'Development · Potato UI';
+    else document.title = `${t.hero.name} · Portfolio`;
+  }, [development, t.hero.name]);
 
   return (
     <div
@@ -29,10 +40,10 @@ const PortfolioLayout: React.FC = () => {
       <BackgroundGlass3D />
 
       {/* Primary Floating Navigation Bar */}
-      <Navbar />
+      {!development && <Navbar />}
 
       {/* Main Content Sections */}
-      <main id="main-content" tabIndex={-1} className="relative z-10">
+      {development ? <Suspense fallback={<p role="status" className="relative z-10 p-12">Loading components…</p>}><Development /></Suspense> : <main id="main-content" tabIndex={-1} className="relative z-10">
         <div className="absolute top-24 inset-x-0 text-center text-[10px] tracking-wide text-slate-500 px-4">{t.preview.preview}</div>
         <Hero />
         <About />
@@ -41,12 +52,12 @@ const PortfolioLayout: React.FC = () => {
         <Experience />
         <Philosophy />
         <Contact />
-      </main>
+      </main>}
 
       {/* Footer */}
-      <div className="relative z-10">
+      {!development && <div className="relative z-10">
         <Footer />
-      </div>
+      </div>}
     </div>
   );
 };
@@ -60,4 +71,5 @@ export default function App() {
     </I18nProvider>
   );
 }
+
 
