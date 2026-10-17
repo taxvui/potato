@@ -25,6 +25,8 @@ jobs:
           GITHUB_PAGES: 'true'
           VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
           VITE_RESUME_URL: ${{ vars.VITE_RESUME_URL }}
+          VITE_LINKEDIN_URL: ${{ vars.VITE_LINKEDIN_URL }}
+          VITE_X_URL: ${{ vars.VITE_X_URL }}
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/codex/portfolio-pages-preview' && github.event_name != 'pull_request'
         with:
@@ -47,6 +49,10 @@ jobs:
           gh --version
           if ! gh api "repos/$GITHUB_REPOSITORY/pages"; then
             gh api --method POST "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+          fi
+          # Publish the Vite artifact, never the raw source through Jekyll.
+          if [ "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" != "workflow" ]; then
+            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
           fi
       - uses: actions/configure-pages@v5
       - name: Deploy preview

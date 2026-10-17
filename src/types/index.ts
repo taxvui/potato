@@ -48,7 +48,6 @@ export interface SkillCategory {
   titleKey: string;
   skills: {
     name: string;
-    level: number; // 1-100
     icon?: string;
     descriptionKey?: string;
   }[];
@@ -59,3 +58,4 @@ export interface StatItem {
   labelKey: string;
   highlightKey?: string;
 }
+

@@ -8,6 +8,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useI18n } from '../hooks/useI18n';
 import { SOCIAL_LINKS } from '../data/portfolioData';
 import { SocialIcon } from '../components/SocialIcon';
+import { SocialLink } from '../components/SocialLink';
 
 export const Contact: React.FC = () => {
   const { theme, accentConfig } = useTheme();
@@ -167,12 +168,10 @@ export const Contact: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-2.5">
               {SOCIAL_LINKS.map((item) => (
-                <a
+                <SocialLink
                   key={item.name}
                   id={`contact-social-${item.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
+                  item={item}
                   className={`group flex items-center gap-2.5 p-2.5 rounded-xl text-xs font-medium transition-all duration-200 shadow-xs hover:shadow-md border hover:scale-102 ${
                     isDark
                       ? 'bg-slate-900/60 border-white/10 text-slate-200 hover:text-white hover:border-[var(--color-accent-border)]'
@@ -191,8 +190,8 @@ export const Contact: React.FC = () => {
                   >
                     <SocialIcon name={item.name} className="w-4 h-4 drop-shadow-xs" />
                   </div>
-                  <span className="font-semibold truncate">{item.name}</span>
-                </a>
+                  <span className="min-w-0"><span className="block font-semibold truncate">{item.name}</span>{!item.url && <span className="block text-[10px] font-normal text-slate-500 dark:text-slate-400">{t.contact.socialPending}</span>}</span>
+                </SocialLink>
               ))}
             </div>
           </GlassCard>

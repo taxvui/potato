@@ -38,7 +38,7 @@ export const Experience: React.FC = () => {
 
             {/* Date Tag on Desktop (positioned to the left of the line) */}
             <div className="hidden md:block absolute -left-36 top-1.5 text-right w-24 text-xs font-mono font-medium text-slate-500 dark:text-slate-400">
-              {exp.period}
+              {t.experience[`${exp.roleKey}Period` as keyof typeof t.experience]}
             </div>
 
             {/* Experience Card with 3D Tilt & Cursor Glare */}
@@ -66,7 +66,7 @@ export const Experience: React.FC = () => {
                       className="text-sm font-semibold"
                       style={{ color: 'var(--color-accent)' }}
                     >
-                      {exp.company}
+                      {t.experience[`${exp.roleKey}Company` as keyof typeof t.experience]}
                     </span>
                     <span className="text-slate-400">•</span>
                     <span className="text-xs text-slate-500 dark:text-slate-400">
@@ -112,3 +112,4 @@ export const Experience: React.FC = () => {
     </Section>
   );
 };
+

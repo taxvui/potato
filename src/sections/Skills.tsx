@@ -182,33 +182,13 @@ export const Skills: React.FC = () => {
                   </div>
 
                   <div className="space-y-4">
-                    {cat.skills.map((skill, sIdx) => (
+                    {cat.skills.map((skill) => (
                       <div key={skill.name} className="space-y-1.5">
                         <div className="flex items-center justify-between text-xs">
                           <span className={`font-medium flex items-center gap-1.5 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
                             <CheckCircle2 className="w-3.5 h-3.5 shrink-0" strokeWidth={2.4} style={{ color: 'var(--color-accent)' }} />
                             {skill.name}
                           </span>
-                          <span className="font-mono text-slate-400 text-[11px]">{skill.level}%</span>
-                        </div>
-
-                        {/* Progress Track with smooth physical liquid fill */}
-                        <div className="h-1.5 w-full rounded-full overflow-hidden glass-light">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{
-                              duration: prefersReducedMotion ? 0.2 : 0.9,
-                              delay: prefersReducedMotion ? 0 : 0.15 + sIdx * 0.08,
-                              ease: [0.16, 1, 0.3, 1],
-                            }}
-                            className="h-full rounded-full"
-                            style={{
-                              backgroundColor: 'var(--color-accent)',
-                              boxShadow: '0 0 8px var(--color-accent-glow)',
-                            }}
-                          />
                         </div>
                       </div>
                     ))}
@@ -222,3 +202,4 @@ export const Skills: React.FC = () => {
     </Section>
   );
 };
+

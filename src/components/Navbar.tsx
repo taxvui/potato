@@ -85,7 +85,7 @@ export const Navbar: React.FC = () => {
           id="nav-logo"
           onClick={() => handleNavClick('hero')}
           className="flex items-center gap-3 group focus:outline-none"
-          aria-label="Alex Chen Portfolio Home"
+          aria-label={`${t.hero.name} — ${t.nav.home}`}
         >
           <BrandLogo size="md" className="transition-transform duration-300 group-hover:scale-105" />
           <div className="flex flex-col text-left">
@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
                 isDark ? 'text-slate-100 group-hover:text-white' : 'text-slate-900 group-hover:text-black'
               }`}
             >
-              Alex Chen
+              {t.hero.name}
             </span>
             <span className="text-[11px] text-slate-400 font-mono tracking-wider uppercase">
               {t.hero.creativeBuilder}

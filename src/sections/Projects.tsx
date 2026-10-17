@@ -122,7 +122,7 @@ export const Projects: React.FC = () => {
                 <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-900/10 dark:bg-slate-950/40">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={t.projects[`${project.descriptionKey.replace("Desc", "Title")}` as keyof typeof t.projects]}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-108 will-change-transform"
                     loading="lazy"
@@ -158,7 +158,7 @@ export const Projects: React.FC = () => {
                         border: '1px solid rgba(255,255,255,0.25)',
                       }}
                     >
-                      {project.category}
+                      {project.category === 'Creative' ? t.projects.filterCreative : project.category === 'Frontend' ? t.projects.filterFrontend : t.projects.filterFullStack}
                     </span>
                   </div>
 
@@ -190,7 +190,7 @@ export const Projects: React.FC = () => {
                         isDark ? 'text-slate-100 group-hover:text-white' : 'text-slate-900 group-hover:text-black'
                       }`}
                     >
-                      {project.title}
+                      {t.projects[`${project.descriptionKey.replace("Desc", "Title")}` as keyof typeof t.projects]}
                     </h3>
 
                     {/* Description */}
@@ -204,7 +204,7 @@ export const Projects: React.FC = () => {
                         {t.projects.impactMetric}
                       </div>
                       <div className="font-semibold" style={{ color: isDark ? accentConfig.hex : accentConfig.dark }}>
-                        {project.metrics}
+                        {t.projects[project.metrics as keyof typeof t.projects]}
                       </div>
                     </div>
 

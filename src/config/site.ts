@@ -1,6 +1,8 @@
 // Public build-time configuration. Never put API keys in VITE_* variables.
 export const siteConfig = {
   contactEmail: (import.meta.env.VITE_CONTACT_EMAIL || '').trim(),
+  linkedinUrl: (import.meta.env.VITE_LINKEDIN_URL || '').trim(),
+  xUrl: (import.meta.env.VITE_X_URL || '').trim(),
   resumeUrl: (import.meta.env.VITE_RESUME_URL || '').trim(),
 };
 

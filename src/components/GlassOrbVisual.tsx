@@ -251,10 +251,10 @@ export const GlassOrbVisual: React.FC = () => {
                 isDark ? 'text-slate-100' : 'text-slate-800'
               }`}
             >
-              {t.hero.floatingCard1Title || 'Liquid Interaction'}
+              {t.hero.floatingCard1Title}
             </p>
             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
-              {t.hero.floatingCard1Sub || '60 FPS React & WebGL'}
+              {t.hero.floatingCard1Sub}
             </p>
           </div>
         </div>
@@ -313,10 +313,10 @@ export const GlassOrbVisual: React.FC = () => {
                 isDark ? 'text-slate-100' : 'text-slate-800'
               }`}
             >
-              {t.hero.floatingCard2Title || 'Full-Stack Velocity'}
+              {t.hero.floatingCard2Title}
             </p>
             <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
-              {t.hero.floatingCard2Sub || 'Next.js & PostgreSQL'}
+              {t.hero.floatingCard2Sub}
             </p>
           </div>
         </div>
@@ -366,7 +366,7 @@ export const GlassOrbVisual: React.FC = () => {
               isDark ? 'text-slate-200' : 'text-slate-700'
             }`}
           >
-            {t.hero.floatingCard3Title || 'Status: Available'}
+            {t.hero.floatingCard3Title}
           </span>
         </div>
       </motion.div>
