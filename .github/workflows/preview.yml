@@ -38,6 +38,7 @@ jobs:
     permissions:
       pages: write
       id-token: write
+      actions: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -52,8 +53,26 @@ jobs:
           fi
           # Publish the Vite artifact, never the raw source through Jekyll.
           if [ "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" != "workflow" ]; then
-            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+            if ! gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow; then
+              echo "::notice::Pages source update requires repository administration. Waiting for branch publishing before deploying the built artifact."
+            fi
           fi
+      - name: Wait for competing branch publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIEW_SHA: ${{ github.sha }}
+        run: |
+          for attempt in $(seq 1 30); do
+            pending=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$PREVIEW_SHA&per_page=100" --jq '[.workflow_runs[] | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            if [ "$pending" = "0" ]; then
+              break
+            fi
+            if [ "$attempt" = "30" ]; then
+              echo "::error::Branch publication is still running; retry this deployment after it completes."
+              exit 1
+            fi
+            sleep 10
+          done
       - uses: actions/configure-pages@v5
       - name: Deploy preview
         id: deployment
