@@ -39,6 +39,6 @@ export function Settings() {
 
 Tabs use roving focus with arrows/Home/End. Dialog uses native showModal for focus trapping, Escape dismissal and focus restoration. Accordion and Select use native keyboard behavior. Motion on Switch is disabled for reduced-motion preferences. Use semantic labels and real text for statuses.
 
-Theme values are inherited from the existing CSS custom properties: `--accent`, `--accent-subtle`, `--accent-border`, `--color-text-primary`, `--glass-bg-frosted`, `--glass-blur-md`, and the glass material classes. Keep these dependencies when copying code.
+Theme values are inherited from the existing CSS custom properties: `--accent`, `--color-accent-subtle`, `--accent-border`, `--color-text-primary`, `--glass-bg-frosted`, `--glass-blur-md`, and the glass material classes. Keep these dependencies when copying code.
 
 Run `npm test` and `GITHUB_PAGES=true npm run build` before publishing. The existing preview workflow deploys the `codex/portfolio-pages-preview` branch.
