@@ -1,4 +1,5 @@
 import React from 'react';
+import { siteConfig, isPublishedUrl } from '../config/site';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight, Sparkles, FileText, ChevronDown } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
@@ -152,7 +153,9 @@ export const Hero: React.FC = () => {
             size="lg"
             variant="ghost"
             magnetic
-            onClick={() => window.open('#', '_blank')}
+            disabled={!isPublishedUrl(siteConfig.resumeUrl)}
+            title={!isPublishedUrl(siteConfig.resumeUrl) ? t.preview.unavailable : undefined}
+            onClick={() => window.open(siteConfig.resumeUrl, '_blank', 'noopener,noreferrer')}
             iconLeft={<FileText className="w-4 h-4" strokeWidth={2.3} />}
           >
             {t.hero.ctaResume}
@@ -216,3 +219,4 @@ export const Hero: React.FC = () => {
     </section>
   );
 };
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isPublishedUrl } from '../config/site';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, Sparkles } from 'lucide-react';
 import { Section } from '../components/Section';
@@ -46,6 +47,7 @@ export const Projects: React.FC = () => {
               key={opt.key}
               id={`project-filter-${opt.key.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
               onClick={() => setSelectedFilter(opt.key)}
+              aria-pressed={isActive}
               whileHover={{ scale: prefersReducedMotion ? 1 : 1.03 }}
               whileTap={{ scale: prefersReducedMotion ? 1 : 0.97 }}
               className={`relative px-4 py-2 rounded-xl text-xs font-semibold transition-colors duration-200 cursor-pointer ${
@@ -120,7 +122,7 @@ export const Projects: React.FC = () => {
                 <div className="relative w-full h-48 sm:h-52 overflow-hidden bg-slate-900/10 dark:bg-slate-950/40">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={t.projects[`${project.descriptionKey.replace("Desc", "Title")}` as keyof typeof t.projects]}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-108 will-change-transform"
                     loading="lazy"
@@ -156,7 +158,7 @@ export const Projects: React.FC = () => {
                         border: '1px solid rgba(255,255,255,0.25)',
                       }}
                     >
-                      {project.category}
+                      {project.category === 'Creative' ? t.projects.filterCreative : project.category === 'Frontend' ? t.projects.filterFrontend : t.projects.filterFullStack}
                     </span>
                   </div>
 
@@ -188,7 +190,7 @@ export const Projects: React.FC = () => {
                         isDark ? 'text-slate-100 group-hover:text-white' : 'text-slate-900 group-hover:text-black'
                       }`}
                     >
-                      {project.title}
+                      {t.projects[`${project.descriptionKey.replace("Desc", "Title")}` as keyof typeof t.projects]}
                     </h3>
 
                     {/* Description */}
@@ -202,7 +204,7 @@ export const Projects: React.FC = () => {
                         {t.projects.impactMetric}
                       </div>
                       <div className="font-semibold" style={{ color: isDark ? accentConfig.hex : accentConfig.dark }}>
-                        {project.metrics}
+                        {t.projects[project.metrics as keyof typeof t.projects]}
                       </div>
                     </div>
 
@@ -226,7 +228,9 @@ export const Projects: React.FC = () => {
                       size="sm"
                       variant="primary"
                       magnetic
-                      onClick={() => window.open(project.demoUrl || '#', '_blank')}
+                      disabled={!isPublishedUrl(project.demoUrl)}
+                      title={!isPublishedUrl(project.demoUrl) ? t.preview.unavailable : undefined}
+                      onClick={() => window.open(project.demoUrl, '_blank', 'noopener,noreferrer')}
                       iconRight={<ExternalLink className="w-4 h-4" strokeWidth={2.3} />}
                     >
                       {t.projects.viewDemo}
@@ -237,7 +241,9 @@ export const Projects: React.FC = () => {
                       size="sm"
                       variant="secondary"
                       magnetic
-                      onClick={() => window.open(project.githubUrl || '#', '_blank')}
+                      disabled={!isPublishedUrl(project.githubUrl)}
+                      title={!isPublishedUrl(project.githubUrl) ? t.preview.unavailable : undefined}
+                      onClick={() => window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
                       iconLeft={<Github className="w-4 h-4" strokeWidth={2.3} />}
                     >
                       {t.projects.viewCode}
@@ -252,3 +258,4 @@ export const Projects: React.FC = () => {
     </Section>
   );
 };
+

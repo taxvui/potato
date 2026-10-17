@@ -6,6 +6,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useI18n } from '../hooks/useI18n';
 import { SOCIAL_LINKS } from '../data/portfolioData';
 import { SocialIcon } from './SocialIcon';
+import { SocialLink } from './SocialLink';
 import { BrandLogo } from './BrandLogo';
 
 export const Footer: React.FC = () => {
@@ -15,7 +16,7 @@ export const Footer: React.FC = () => {
   const isDark = theme === 'dark';
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
 
   const navLinks: { id: SectionId; label: string }[] = [
@@ -44,7 +45,7 @@ export const Footer: React.FC = () => {
               <BrandLogo size="md" className="transition-transform duration-300 group-hover:scale-105" />
               <div className="flex flex-col">
                 <span className={`font-bold text-base tracking-tight ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
-                  Alex Chen
+                  {t.hero.name}
                 </span>
                 <span className="text-[11px] text-slate-400 font-mono tracking-wider uppercase">
                   {t.hero.creativeBuilder}
@@ -87,14 +88,10 @@ export const Footer: React.FC = () => {
             </h4>
             <div className="flex flex-wrap items-center gap-2.5 pt-1">
               {SOCIAL_LINKS.map((item) => (
-                <a
+                <SocialLink
                   key={item.name}
                   id={`footer-social-${item.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
-                  href={item.url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={`Alex Chen on ${item.name}`}
-                  title={item.name}
+                  item={item}
                   className={`group relative flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-300 hover:scale-110 shadow-xs hover:shadow-md cursor-pointer border ${
                     isDark
                       ? 'bg-slate-900/70 border-white/15 text-slate-100 hover:text-white hover:border-[var(--color-accent-border)] hover:shadow-[0_4px_16px_var(--color-accent-glow)]'
@@ -103,16 +100,17 @@ export const Footer: React.FC = () => {
                 >
                   <SocialIcon name={item.name} className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 drop-shadow-xs" />
                   <span className="sr-only">{item.name}</span>
-                </a>
+                </SocialLink>
               ))}
             </div>
+            {SOCIAL_LINKS.some(item => !item.url) && <p className="text-xs text-slate-500 dark:text-slate-400">{t.contact.socialHint}</p>}
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="pt-6 border-t border-slate-200/70 dark:border-slate-800/70 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <div className="text-center sm:text-left">
-            <span>© {new Date().getFullYear()} Alex Chen. {t.footer.rights}</span>
+            <span>© {new Date().getFullYear()} {t.hero.name}. {t.footer.rights}</span>
             <span className="hidden sm:inline mx-2">•</span>
             <span className="block sm:inline mt-1 sm:mt-0 opacity-75">{t.footer.builtWith}</span>
           </div>
@@ -132,3 +130,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+

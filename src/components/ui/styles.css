@@ -1,0 +1,860 @@
+.g-stack {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.g-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.g-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.g-muted {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+.g-error {
+  font-size: 12px;
+  color: #be123c;
+}
+.dark .g-error {
+  color: #fda4af;
+}
+.g-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.g-check,
+.g-radio {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.g-check[data-state="checked"],
+.g-radio[data-state="checked"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+.g-check:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.g-radio {
+  border-radius: 50%;
+}
+.g-radio-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+}
+.g-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 28px;
+  touch-action: none;
+}
+.g-slider-track {
+  position: relative;
+  background: var(--color-accent-subtle);
+  height: 6px;
+  flex-grow: 1;
+  border-radius: 99px;
+}
+.g-slider-range {
+  position: absolute;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+}
+.g-slider-thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--g-surface, #fff);
+  box-shadow: 0 2px 8px #0002;
+}
+.g-toggle {
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.g-toggle[data-state="on"] {
+  background: var(--color-accent-subtle);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+.g-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+.g-input-group input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  outline: none;
+  box-shadow: none !important;
+  border: 0;
+  color: inherit;
+}
+.g-input-group:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.g-input-group > span {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+.g-otp {
+  padding: 14px 18px;
+  border-radius: 12px;
+  font: 600 22px monospace;
+  letter-spacing: 0.4em;
+  width: 100%;
+  max-width: 290px;
+  color: inherit;
+}
+.g-button-group {
+  display: flex;
+  align-items: stretch;
+  max-width: 100%;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.g-button-group > * {
+  border-radius: 4px !important;
+}
+.g-button-group > :first-child {
+  border-radius: 12px 4px 4px 12px !important;
+}
+.g-button-group > :last-child {
+  border-radius: 4px 12px 12px 4px !important;
+}
+:root {
+  --g-surface: #f7f8fc;
+  --g-border: rgba(100, 116, 139, 0.23);
+}
+.dark {
+  --g-surface: #131e30;
+  --g-border: rgba(148, 163, 184, 0.25);
+}
+.g-popup {
+  z-index: 300;
+  min-width: 190px;
+  max-width: min(380px, calc(100vw - 32px));
+  padding: 8px;
+  border: 1px solid var(--g-border);
+  border-radius: 14px;
+  background: var(--g-surface);
+  color: var(--color-text-primary);
+  box-shadow: 0 16px 48px #0003;
+  animation: g-appear 0.12s ease-out;
+}
+.g-menu-item {
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+.g-menu-item[data-highlighted] {
+  background: var(--color-accent-subtle);
+  color: var(--accent);
+}
+.g-menu-item[data-disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.g-menu-label {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+.g-separator {
+  border: 0;
+  height: 1px;
+  background: var(--g-border);
+  margin: 8px 0;
+  width: 100%;
+}
+.g-tooltip {
+  padding: 8px 12px;
+  font-size: 12px;
+  min-width: 0;
+  max-width: 260px;
+}
+.g-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 250;
+  animation: g-appear 0.15s;
+}
+.g-modal {
+  position: fixed;
+  z-index: 260;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  background: var(--g-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--g-border);
+  box-shadow: 0 20px 80px #0004;
+  border-radius: 22px;
+  padding: 28px;
+  width: min(480px, calc(100vw - 32px));
+  max-height: 85dvh;
+  overflow: auto;
+  animation: g-appear 0.15s;
+}
+.g-modal h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.g-modal-description {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.g-modal-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.g-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  height: 28px;
+  width: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.g-sheet {
+  inset: 0 0 0 auto;
+  transform: none;
+  width: min(420px, calc(100vw - 28px));
+  height: 100dvh;
+  max-height: none;
+  border-radius: 22px 0 0 22px;
+  padding-top: 48px;
+}
+.g-drawer {
+  inset: auto 0 0;
+  transform: none;
+  margin: auto;
+  width: min(680px, 100%);
+  border-radius: 24px 24px 0 0;
+}
+.g-drawer:before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 4px;
+  background: var(--g-border);
+  border-radius: 99px;
+  margin: -12px auto 24px;
+}
+.g-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-width: 180px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.g-toast-viewport {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 400;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 48px));
+  list-style: none;
+  outline: none;
+}
+.g-toast {
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--g-surface);
+  border: 1px solid var(--g-border);
+  box-shadow: 0 12px 50px #0003;
+  color: var(--color-text-primary);
+}
+.g-toast-title {
+  font-weight: 650;
+  font-size: 14px;
+}
+.g-toast-description {
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 6px 0 12px;
+  color: var(--color-text-secondary);
+}
+.g-toast[data-state="open"] {
+  animation: g-appear 0.15s;
+}
+.g-command {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.g-command-search {
+  border: 0;
+  border-bottom: 1px solid var(--g-border);
+  border-radius: 0 !important;
+}
+.g-command-list {
+  max-height: 240px;
+  overflow: auto;
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+}
+.g-command-list button {
+  text-align: left;
+  padding: 11px 14px;
+  font-size: 13px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.g-command-list button:hover,
+.g-command-list button:focus {
+  background: var(--color-accent-subtle);
+}
+.g-trigger-zone {
+  border: 1px dashed var(--g-border);
+  padding: 38px 20px;
+  border-radius: 16px;
+  text-align: center;
+  width: 100%;
+}
+.g-navlinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+}
+.g-navlinks a {
+  padding: 8px 0;
+}
+.g-navlinks a:hover {
+  text-decoration: underline;
+}
+.g-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+.g-breadcrumb a {
+  color: var(--color-text-secondary);
+}
+.g-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--accent-border);
+  color: var(--color-accent);
+  overflow: hidden;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.g-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.g-aspect {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--color-accent-subtle);
+}
+.g-aspect > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.g-empty {
+  text-align: center;
+  padding: 32px 20px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+.g-empty h3 {
+  font-size: 18px;
+  font-weight: 650;
+}
+.g-item {
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.g-item-main {
+  flex: 1;
+  min-width: 0;
+}
+.g-item-main strong {
+  display: block;
+  font-size: 13px;
+}
+.g-item-main p {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+.g-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 25px;
+  height: 25px;
+  padding: 0 6px;
+  border: 1px solid var(--g-border);
+  border-bottom-width: 3px;
+  border-radius: 6px;
+  font: 11px monospace;
+  background: var(--g-surface);
+}
+.g-skeleton {
+  background: linear-gradient(
+    100deg,
+    var(--color-accent-subtle) 20%,
+    var(--g-border) 50%,
+    var(--color-accent-subtle) 80%
+  );
+  background-size: 220% 100%;
+  border-radius: 8px;
+  animation: g-shimmer 2s linear infinite;
+}
+.g-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--g-border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: g-spin 0.7s linear infinite;
+}
+.g-scroll {
+  overflow: auto;
+  max-height: 200px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-border) transparent;
+  padding-right: 12px;
+}
+.g-sidebar {
+  width: 220px;
+  max-width: 100%;
+  padding: 18px;
+  border-radius: 16px;
+}
+.g-sidebar nav {
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+}
+.g-sidebar a {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.g-sidebar a[aria-current="page"] {
+  background: var(--color-accent-subtle);
+  color: var(--accent);
+}
+.g-attachment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+}
+.g-bubble {
+  padding: 14px 18px;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--accent-border);
+  border-radius: 18px 18px 18px 3px;
+  max-width: 85%;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.g-message {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+.g-message[data-author="user"] {
+  flex-direction: row-reverse;
+}
+.g-message[data-author="user"] .g-bubble {
+  border-radius: 18px 18px 3px 18px;
+}
+.g-marker {
+  padding: 1px 4px;
+  background: var(--color-accent-subtle);
+  color: inherit;
+  border-bottom: 2px solid var(--accent);
+  border-radius: 3px;
+}
+.g-code {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.g-code pre {
+  padding: 20px !important;
+  margin: 0 !important;
+  white-space: pre;
+  overflow: auto;
+}
+.g-code-toolbar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--g-border);
+}
+.g-trace {
+  border-left: 2px solid var(--accent-border);
+  padding-left: 18px;
+  display: grid;
+  gap: 18px;
+}
+.g-trace li {
+  position: relative;
+  list-style: none;
+  font-size: 13px;
+}
+.g-trace li:before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent);
+  background: var(--g-surface);
+  border-radius: 50%;
+}
+.g-typography h3 {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+.g-typography p {
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 14px 0;
+}
+.g-typography blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 18px;
+  font-style: italic;
+}
+.g-table-wrap {
+  width: 100%;
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid var(--g-border);
+}
+.g-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.g-table th {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+.g-table th,
+.g-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--g-border);
+}
+.g-table tbody tr:last-child td {
+  border: 0;
+}
+.g-table th button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.g-pagination {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.g-pagination button {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.g-pagination button[aria-current="page"] {
+  background: var(--accent);
+  color: white;
+}
+.g-pagination button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.g-carousel {
+  width: 100%;
+  max-width: 500px;
+}
+.g-slide {
+  min-height: 200px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 28px;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--accent-border);
+}
+.g-slide h3 {
+  font-size: 28px;
+  font-weight: 650;
+}
+.g-slide p {
+  font-size: 13px;
+  margin-top: 10px;
+}
+.g-carousel-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  font-size: 12px;
+}
+.g-chart {
+  width: 100%;
+}
+.g-chart svg {
+  width: 100%;
+  height: auto;
+}
+.g-chart text {
+  fill: var(--color-text-secondary);
+  font: 11px sans-serif;
+}
+.g-chart [data-bar] {
+  fill: var(--accent);
+  opacity: 0.7;
+}
+.g-chart [data-bar]:hover,
+.g-chart [data-bar]:focus {
+  opacity: 1;
+  outline: 2px solid var(--accent);
+}
+.g-chart figcaption {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 12px;
+}
+.g-calendar {
+  width: 100%;
+  max-width: 320px;
+  padding: 18px;
+  border-radius: 18px;
+}
+.g-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.g-calendar-header button {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.g-calendar-header button:hover {
+  background: var(--color-accent-subtle);
+}
+.g-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  text-align: center;
+}
+.g-calendar-grid > span {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  padding-bottom: 8px;
+}
+.g-calendar-grid button {
+  height: 34px;
+  border-radius: 9px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.g-calendar-grid button[aria-pressed="true"] {
+  background: var(--accent);
+  color: white;
+}
+.g-calendar-grid button:hover:not([aria-pressed="true"]) {
+  background: var(--color-accent-subtle);
+}
+.g-resizable {
+  display: flex;
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.g-resizable > section {
+  overflow: auto;
+  min-width: 0;
+  padding: 18px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 13px;
+}
+.g-resize-handle {
+  width: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent-subtle);
+  cursor: col-resize;
+  touch-action: none;
+  flex-shrink: 0;
+}
+.g-resize-handle:after {
+  content: "";
+  width: 3px;
+  height: 28px;
+  border-radius: 99px;
+  background: var(--accent-border);
+}
+.g-check:focus-visible,
+.g-radio:focus-visible,
+.g-toggle:focus-visible,
+.g-slider-thumb:focus-visible,
+.g-select-trigger:focus-visible,
+.g-menu-item:focus-visible,
+.g-calendar-grid button:focus-visible,
+.g-pagination button:focus-visible,
+.g-resize-handle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.g-item a:focus-visible,
+.g-popup a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@keyframes g-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes g-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes g-shimmer {
+  to {
+    background-position: -220% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .g-popup,
+  .g-overlay,
+  .g-modal,
+  .g-toast,
+  .g-skeleton {
+    animation: none;
+  }
+  .g-spinner {
+    animation-duration: 2s;
+  }
+}
+@media (max-width: 600px) {
+  .g-modal {
+    padding: 24px;
+  }
+  .g-drawer {
+    padding-top: 32px;
+  }
+  .g-sheet {
+    padding-top: 44px;
+  }
+  .g-bubble {
+    max-width: 90%;
+  }
+  .g-calendar {
+    padding: 12px;
+  }
+  .g-table th,
+  .g-table td {
+    padding: 12px;
+  }
+}

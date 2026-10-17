@@ -85,7 +85,7 @@ export const Navbar: React.FC = () => {
           id="nav-logo"
           onClick={() => handleNavClick('hero')}
           className="flex items-center gap-3 group focus:outline-none"
-          aria-label="Alex Chen Portfolio Home"
+          aria-label={`${t.hero.name} — ${t.nav.home}`}
         >
           <BrandLogo size="md" className="transition-transform duration-300 group-hover:scale-105" />
           <div className="flex flex-col text-left">
@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
                 isDark ? 'text-slate-100 group-hover:text-white' : 'text-slate-900 group-hover:text-black'
               }`}
             >
-              Alex Chen
+              {t.hero.name}
             </span>
             <span className="text-[11px] text-slate-400 font-mono tracking-wider uppercase">
               {t.hero.creativeBuilder}
@@ -104,7 +104,7 @@ export const Navbar: React.FC = () => {
 
         {/* Desktop Navigation Links */}
         <nav
-          className="hidden md:flex items-center gap-1 rounded-full p-1.5 glass-medium shadow-xs transition-colors"
+          className="hidden lg:flex items-center gap-1 rounded-full p-1.5 glass-medium shadow-xs transition-colors"
         >
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.id;
@@ -142,6 +142,7 @@ export const Navbar: React.FC = () => {
 
         {/* Right CTA, Preferences Icon Popup & Mobile Toggle */}
         <div className="flex items-center gap-2">
+          <a href="#/development" className="rounded-lg px-2 py-2 text-xs font-medium accent-color focus-visible:outline-2" aria-label="Development component library">Development</a>
           {/* Preferences Icon Popup: Language, Appearance & Color */}
           <PreferencesPopup id="nav-preferences" variant="icon-only" align="right" />
 
@@ -161,12 +162,14 @@ export const Navbar: React.FC = () => {
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden p-2.5 rounded-xl glass-medium border border-white/25 dark:border-white/10 transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer ${
+            className={`lg:hidden p-2.5 rounded-xl glass-medium border border-white/25 dark:border-white/10 transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer ${
               isDark
                 ? 'text-slate-100 hover:text-white hover:bg-white/10'
                 : 'text-slate-800 hover:text-slate-950 hover:bg-white/80'
             }`}
             aria-label={t.nav.toggleMenu}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" strokeWidth={2.3} /> : <Menu className="w-4 h-4" strokeWidth={2.3} />}
           </button>
@@ -177,11 +180,12 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className={`md:hidden floating-glass border-b px-4 py-4 ${
+            className={`lg:hidden floating-glass border-b px-4 py-4 ${
               isDark ? 'text-slate-200' : 'text-slate-800'
             }`}
           >
@@ -234,3 +238,5 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
+

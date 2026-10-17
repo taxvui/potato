@@ -13,7 +13,7 @@ interface GlassThemeSwitcherProps {
 interface ThemeOption {
   value: ThemePreference;
   label: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
 }
 
 export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
@@ -87,3 +87,4 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
     </div>
   );
 };
+

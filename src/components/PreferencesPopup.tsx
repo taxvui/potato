@@ -38,18 +38,39 @@ export const PreferencesPopup: React.FC<PreferencesPopupProps> = ({
   const isDark = theme === 'dark';
   const colorKeys = Object.keys(ACCENT_COLORS) as AccentColor[];
 
-  // Close on Escape key
+  // Isolate the dialog, trap keyboard focus and restore its trigger.
   useEffect(() => {
     if (!isOpen) return;
 
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const app = document.getElementById('root');
+    const previousInert = app?.inert ?? false;
+    if (app) app.inert = true;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusable = () => Array.from(modalCardRef.current?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input, select, textarea, [tabindex="0"]') || []);
+    const frame = requestAnimationFrame(() => (focusable()[0] || modalCardRef.current)?.focus());
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        const items = focusable();
+        const first = items[0], last = items[items.length - 1];
+        if (!first) { e.preventDefault(); modalCardRef.current?.focus(); }
+        else if (e.shiftKey && (document.activeElement === first || !modalCardRef.current?.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && (document.activeElement === last || !modalCardRef.current?.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+      }
       if (e.key === 'Escape') {
         setIsOpen(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('keydown', handleKeyDown);
+      if (app) app.inert = previousInert;
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
   }, [isOpen]);
 
   const languages: { code: Language; label: string; short: string; flag: string }[] = [
@@ -107,13 +128,14 @@ export const PreferencesPopup: React.FC<PreferencesPopupProps> = ({
           <motion.div
             ref={modalCardRef}
             role="dialog"
+            tabIndex={-1}
             aria-modal="true"
             aria-label={t.preferences.title}
             initial={{ opacity: 0, scale: 0.94, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 12 }}
             transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-            className="relative w-full max-w-[400px] p-5 sm:p-6 rounded-3xl floating-glass liquid-sheen shadow-2xl select-none overflow-hidden z-10 bg-clip-padding"
+            className="relative w-full max-w-[400px] p-5 sm:p-6 rounded-3xl floating-glass liquid-sheen shadow-2xl select-none max-h-[85dvh] overflow-y-auto z-10 bg-clip-padding"
             style={{
               boxShadow: isDark
                 ? '0 30px 60px -12px rgba(0, 0, 0, 0.85), 0 0 32px -4px var(--color-accent-glow)'
@@ -433,3 +455,4 @@ export const PreferencesPopup: React.FC<PreferencesPopupProps> = ({
     </>
   );
 };
+

@@ -1,0 +1,80 @@
+name: Portfolio preview
+on:
+  push:
+    branches: [main, codex/portfolio-pages-preview]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          GITHUB_PAGES: 'true'
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_RESUME_URL: ${{ vars.VITE_RESUME_URL }}
+          VITE_LINKEDIN_URL: ${{ vars.VITE_LINKEDIN_URL }}
+          VITE_X_URL: ${{ vars.VITE_X_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/codex/portfolio-pages-preview' && github.event_name != 'pull_request'
+        with:
+          path: dist
+  deploy:
+    if: github.ref == 'refs/heads/codex/portfolio-pages-preview' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Inspect or enable GitHub Pages using GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh --version
+          if ! gh api "repos/$GITHUB_REPOSITORY/pages"; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+          fi
+          # Publish the Vite artifact, never the raw source through Jekyll.
+          if [ "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" != "workflow" ]; then
+            if ! gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow; then
+              echo "::notice::Pages source update requires repository administration. Waiting for branch publishing before deploying the built artifact."
+            fi
+          fi
+      - name: Wait for competing branch publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREVIEW_SHA: ${{ github.sha }}
+        run: |
+          for attempt in $(seq 1 30); do
+            pending=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$PREVIEW_SHA&per_page=100" --jq '[.workflow_runs[] | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            if [ "$pending" = "0" ]; then
+              break
+            fi
+            if [ "$attempt" = "30" ]; then
+              echo "::error::Branch publication is still running; retry this deployment after it completes."
+              exit 1
+            fi
+            sleep 10
+          done
+      - uses: actions/configure-pages@v5
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4
+
