@@ -1,0 +1,617 @@
+@import "tailwindcss";
+
+:root {
+  /* Text colors */
+  --color-text-primary: #0f172a;    /* slate-900 */
+  --color-text-secondary: #334155;  /* slate-700 */
+  --color-text-tertiary: #64748b;   /* slate-500 */
+  --color-text-muted: #94a3b8;      /* slate-400 */
+
+  /* Glass Blur Levels */
+  --glass-blur-sm: 8px;
+  --glass-blur-md: 16px;
+  --glass-blur-lg: 24px;
+  --glass-blur-xl: 32px;
+  --glass-blur-2xl: 44px;
+
+  /* Glass Radius Levels (Refined Apple-inspired scale) */
+  --glass-radius-sm: 8px;
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 16px;
+  --glass-radius-xl: 20px;
+  --glass-radius-pill: 9999px;
+
+  /* Ultra-Realistic Transparent Liquid Glass Materials */
+  /* 1. Clear Glass (Navigation, floating controls, quick badges) */
+  --glass-bg-clear: rgba(255, 255, 255, 0.18);
+  --glass-blur-clear: 10px;
+
+  /* 2. Frosted Glass (Primary cards, content blocks) */
+  --glass-bg-frosted: color-mix(in srgb, var(--accent) 2.5%, rgba(255, 255, 255, 0.36));
+  --glass-blur-frosted: 22px;
+
+  /* 3. Crystal Glass (Hero panels, featured projects, spotlights) */
+  --glass-bg-crystal: color-mix(in srgb, var(--accent) 3%, rgba(255, 255, 255, 0.24));
+  --glass-blur-crystal: 14px;
+
+  /* 4. Deep Glass (Modals, preferences flyout, high contrast containers) */
+  --glass-bg-deep: color-mix(in srgb, var(--accent) 2%, rgba(255, 255, 255, 0.50));
+  --glass-blur-deep: 28px;
+
+  /* 5. Liquid Glass (Dynamic fluid panels, hero orb components) */
+  --glass-bg-liquid: color-mix(in srgb, var(--accent) 4%, rgba(255, 255, 255, 0.26));
+  --glass-blur-liquid: 18px;
+
+  /* Physical Multi-Layer Soft Shadows (Falling toward bottom-right) */
+  --glass-shadow-soft: 0 16px 36px -10px rgba(15, 23, 42, 0.07), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --glass-shadow-elevated: 0 24px 48px -12px rgba(15, 23, 42, 0.10), 0 8px 18px -4px rgba(15, 23, 42, 0.04);
+
+  /* Monolithic Glass Borders (Crisp 1px boundary, no split corner cuts) */
+  --glass-border-clear: rgba(255, 255, 255, 0.85);
+  --glass-border-frosted: rgba(255, 255, 255, 0.75);
+  --glass-border-crystal: rgba(255, 255, 255, 0.90);
+  --glass-border-deep: rgba(226, 232, 240, 0.80);
+  --glass-border-liquid: rgba(255, 255, 255, 0.82);
+
+  /* Legacy aliases for directional edges (unified to crisp border) */
+  --glass-border-top: var(--glass-border-frosted);
+  --glass-border-left: var(--glass-border-frosted);
+  --glass-border-right: rgba(255, 255, 255, 0.50);
+  --glass-border-bottom: rgba(226, 232, 240, 0.60);
+
+  /* Refractive Specular Internal Edge (Concentric specular highlight, 0 offset to eliminate 2-layer effect) */
+  --glass-inner-light: inset 0 1px 0 0 rgba(255, 255, 255, 0.65), inset 0 0 16px 0 rgba(255, 255, 255, 0.08);
+
+  /* Compatibility Aliases */
+  --glass-bg-light: var(--glass-bg-clear);
+  --glass-border-light: var(--glass-border-clear);
+  --glass-shadow-light: var(--glass-shadow-soft), var(--glass-inner-light);
+  --glass-blur-tier-light: var(--glass-blur-clear);
+
+  --glass-bg-medium: var(--glass-bg-frosted);
+  --glass-border-medium: var(--glass-border-frosted);
+  --glass-shadow-medium: var(--glass-shadow-soft), var(--glass-inner-light);
+  --glass-blur-tier-medium: var(--glass-blur-frosted);
+
+  --glass-border-deep: rgba(203, 213, 225, 0.75);
+  --glass-shadow-deep: var(--glass-shadow-elevated), var(--glass-inner-light);
+  --glass-blur-tier-deep: var(--glass-blur-deep);
+
+  --glass-bg-floating: var(--glass-bg-crystal);
+  --glass-border-floating: var(--glass-border-crystal);
+  --glass-shadow-floating: var(--glass-shadow-elevated), var(--glass-inner-light);
+  --glass-blur-tier-floating: var(--glass-blur-crystal);
+
+  /* Specular reflection highlights */
+  --glass-reflection: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+  --glass-border-highlight: rgba(255, 255, 255, 0.9);
+
+  /* Default Accent: Pastel Pink (Light Mode) */
+  --accent: #f472b6;
+  --accent-light: #fce7f3;
+  --accent-dark: #db2777;
+  --accent-soft: rgba(244, 114, 182, 0.12);
+  --accent-glow: rgba(244, 114, 182, 0.35);
+  --accent-border: rgba(244, 114, 182, 0.38);
+
+  /* Centralized Compatibility Aliases */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-dark);
+  --color-accent-subtle: var(--accent-soft);
+  --color-accent-border: var(--accent-border);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-contrast: #ffffff;
+}
+
+.dark {
+  /* Text colors */
+  --color-text-primary: #f8fafc;    /* slate-50 */
+  --color-text-secondary: #cbd5e1;  /* slate-300 */
+  --color-text-tertiary: #94a3b8;   /* slate-400 */
+  --color-text-muted: #64748b;      /* slate-500 */
+
+  /* Ultra-Realistic Transparent Liquid Glass Materials (Dark Mode) */
+  --glass-bg-clear: rgba(15, 23, 42, 0.20);
+  --glass-blur-clear: 10px;
+
+  --glass-bg-frosted: color-mix(in srgb, var(--accent) 3.5%, rgba(15, 23, 42, 0.35));
+  --glass-blur-frosted: 22px;
+
+  --glass-bg-crystal: color-mix(in srgb, var(--accent) 4%, rgba(15, 23, 42, 0.24));
+  --glass-blur-crystal: 14px;
+
+  --glass-bg-deep: color-mix(in srgb, var(--accent) 3%, rgba(11, 17, 33, 0.52));
+  --glass-blur-deep: 28px;
+
+  --glass-bg-liquid: color-mix(in srgb, var(--accent) 5%, rgba(15, 23, 42, 0.28));
+  --glass-blur-liquid: 18px;
+
+  /* Physical Multi-Layer Soft Shadows (Dark Mode) */
+  --glass-shadow-soft: 0 20px 48px -12px rgba(0, 0, 0, 0.65), 0 6px 16px -4px rgba(0, 0, 0, 0.40);
+  --glass-shadow-elevated: 0 28px 60px -14px rgba(0, 0, 0, 0.80), 0 10px 22px -6px rgba(0, 0, 0, 0.50);
+
+  /* Monolithic Glass Borders (Crisp 1px boundary, Dark Mode) */
+  --glass-border-clear: rgba(255, 255, 255, 0.16);
+  --glass-border-frosted: rgba(255, 255, 255, 0.14);
+  --glass-border-crystal: rgba(255, 255, 255, 0.20);
+  --glass-border-deep: rgba(255, 255, 255, 0.12);
+  --glass-border-liquid: rgba(255, 255, 255, 0.18);
+
+  /* Legacy aliases for directional edges (unified to crisp border in Dark Mode) */
+  --glass-border-top: var(--glass-border-frosted);
+  --glass-border-left: var(--glass-border-frosted);
+  --glass-border-right: rgba(255, 255, 255, 0.09);
+  --glass-border-bottom: rgba(0, 0, 0, 0.50);
+
+  /* Refractive Specular Internal Edge (Dark Mode: subtle specular top highlight, 0 offset) */
+  --glass-inner-light: inset 0 1px 0 0 rgba(255, 255, 255, 0.18), inset 0 0 16px 0 rgba(255, 255, 255, 0.02);
+
+  /* Compatibility Aliases (Dark Mode) */
+  --glass-bg-light: var(--glass-bg-clear);
+  --glass-border-light: var(--glass-border-clear);
+  --glass-shadow-light: var(--glass-shadow-soft), var(--glass-inner-light);
+  --glass-blur-tier-light: var(--glass-blur-clear);
+
+  --glass-bg-medium: var(--glass-bg-frosted);
+  --glass-border-medium: var(--glass-border-frosted);
+  --glass-shadow-medium: var(--glass-shadow-soft), var(--glass-inner-light);
+  --glass-blur-tier-medium: var(--glass-blur-frosted);
+
+  --glass-border-deep: var(--glass-border-deep);
+  --glass-shadow-deep: var(--glass-shadow-elevated), var(--glass-inner-light);
+  --glass-blur-tier-deep: var(--glass-blur-deep);
+
+  --glass-bg-floating: var(--glass-bg-crystal);
+  --glass-border-floating: var(--glass-border-crystal);
+  --glass-shadow-floating: var(--glass-shadow-elevated), var(--glass-inner-light);
+  --glass-blur-tier-floating: var(--glass-blur-crystal);
+
+  /* Specular reflection highlights (Dark Mode) */
+  --glass-reflection: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 100%);
+  --glass-border-highlight: rgba(255, 255, 255, 0.25);
+
+  /* Default Accent: Pastel Pink (Dark Mode) */
+  --accent: #f472b6;
+  --accent-light: #fbcfe8;
+  --accent-dark: #be185d;
+  --accent-soft: rgba(244, 114, 182, 0.18);
+  --accent-glow: rgba(244, 114, 182, 0.40);
+  --accent-border: rgba(244, 114, 182, 0.42);
+
+  /* Centralized Compatibility Aliases (Dark) */
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-light);
+  --color-accent-subtle: var(--accent-soft);
+  --color-accent-border: var(--accent-border);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-contrast: #ffffff;
+}
+
+/* Accent 1: Pastel Pink */
+[data-accent="pastel-pink"] {
+  --accent: #f472b6;
+  --accent-light: #fce7f3;
+  --accent-dark: #db2777;
+  --accent-soft: rgba(244, 114, 182, 0.12);
+  --accent-glow: rgba(244, 114, 182, 0.35);
+  --accent-border: rgba(244, 114, 182, 0.38);
+}
+.dark[data-accent="pastel-pink"], [data-accent="pastel-pink"].dark, .dark [data-accent="pastel-pink"] {
+  --accent: #f472b6;
+  --accent-light: #fbcfe8;
+  --accent-dark: #be185d;
+  --accent-soft: rgba(244, 114, 182, 0.18);
+  --accent-glow: rgba(244, 114, 182, 0.40);
+  --accent-border: rgba(244, 114, 182, 0.42);
+}
+
+/* Accent 2: Lavender */
+[data-accent="lavender"] {
+  --accent: #a78bfa;
+  --accent-light: #f3e8ff;
+  --accent-dark: #7c3aed;
+  --accent-soft: rgba(167, 139, 250, 0.12);
+  --accent-glow: rgba(167, 139, 250, 0.35);
+  --accent-border: rgba(167, 139, 250, 0.38);
+}
+.dark[data-accent="lavender"], [data-accent="lavender"].dark, .dark [data-accent="lavender"] {
+  --accent: #a78bfa;
+  --accent-light: #e9d5ff;
+  --accent-dark: #6d28d9;
+  --accent-soft: rgba(167, 139, 250, 0.18);
+  --accent-glow: rgba(167, 139, 250, 0.40);
+  --accent-border: rgba(167, 139, 250, 0.42);
+}
+
+/* Accent 3: Baby Blue */
+[data-accent="baby-blue"] {
+  --accent: #60a5fa;
+  --accent-light: #e0f2fe;
+  --accent-dark: #2563eb;
+  --accent-soft: rgba(96, 165, 250, 0.12);
+  --accent-glow: rgba(96, 165, 250, 0.35);
+  --accent-border: rgba(96, 165, 250, 0.38);
+}
+.dark[data-accent="baby-blue"], [data-accent="baby-blue"].dark, .dark [data-accent="baby-blue"] {
+  --accent: #60a5fa;
+  --accent-light: #bae6fd;
+  --accent-dark: #1d4ed8;
+  --accent-soft: rgba(96, 165, 250, 0.18);
+  --accent-glow: rgba(96, 165, 250, 0.40);
+  --accent-border: rgba(96, 165, 250, 0.42);
+}
+
+/* Accent 4: Mint */
+[data-accent="mint"] {
+  --accent: #34d399;
+  --accent-light: #d1fae5;
+  --accent-dark: #059669;
+  --accent-soft: rgba(52, 211, 153, 0.12);
+  --accent-glow: rgba(52, 211, 153, 0.35);
+  --accent-border: rgba(52, 211, 153, 0.38);
+}
+.dark[data-accent="mint"], [data-accent="mint"].dark, .dark [data-accent="mint"] {
+  --accent: #34d399;
+  --accent-light: #a7f3d0;
+  --accent-dark: #047857;
+  --accent-soft: rgba(52, 211, 153, 0.18);
+  --accent-glow: rgba(52, 211, 153, 0.40);
+  --accent-border: rgba(52, 211, 153, 0.42);
+}
+
+/* Accent 5: Peach */
+[data-accent="peach"] {
+  --accent: #fb923c;
+  --accent-light: #ffedd5;
+  --accent-dark: #ea580c;
+  --accent-soft: rgba(251, 146, 60, 0.12);
+  --accent-glow: rgba(251, 146, 60, 0.35);
+  --accent-border: rgba(251, 146, 60, 0.38);
+}
+.dark[data-accent="peach"], [data-accent="peach"].dark, .dark [data-accent="peach"] {
+  --accent: #fb923c;
+  --accent-light: #fed7aa;
+  --accent-dark: #c2410c;
+  --accent-soft: rgba(249, 115, 22, 0.18);
+  --accent-glow: rgba(249, 115, 22, 0.40);
+  --accent-border: rgba(249, 115, 22, 0.42);
+}
+
+/* Accent 6: Soft Yellow */
+[data-accent="soft-yellow"] {
+  --accent: #facc15;
+  --accent-light: #fef9c3;
+  --accent-dark: #ca8a04;
+  --accent-soft: rgba(250, 204, 21, 0.14);
+  --accent-glow: rgba(250, 204, 21, 0.35);
+  --accent-border: rgba(250, 204, 21, 0.38);
+}
+.dark[data-accent="soft-yellow"], [data-accent="soft-yellow"].dark, .dark [data-accent="soft-yellow"] {
+  --accent: #facc15;
+  --accent-light: #fef08a;
+  --accent-dark: #a16207;
+  --accent-soft: rgba(250, 204, 21, 0.18);
+  --accent-glow: rgba(250, 204, 21, 0.40);
+  --accent-border: rgba(250, 204, 21, 0.42);
+}
+
+/* Global Smooth Theme Transitions & Multilingual Font Stack */
+html {
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', 'Plus Jakarta Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+.glass-clear,
+.glass-frosted,
+.glass-crystal,
+.glass-deep,
+.glass-liquid,
+.glass-light,
+.glass-medium,
+.floating-glass {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .glass-clear,
+  .glass-frosted,
+  .glass-crystal,
+  .glass-deep,
+  .glass-liquid,
+  .glass-light,
+  .glass-medium,
+  .floating-glass {
+    transition: none !important;
+  }
+}
+
+/* 1. Clear Glass (Ultra-transparent, minimal blur for navigation & floating elements) */
+.glass-clear,
+.glass-light {
+  background: var(--glass-bg-clear);
+  backdrop-filter: blur(var(--glass-blur-clear)) saturate(190%) contrast(102%) brightness(101%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-clear)) saturate(190%) contrast(102%) brightness(101%);
+  border: 1px solid var(--glass-border-clear);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  box-shadow: var(--glass-shadow-soft), var(--glass-inner-light);
+}
+
+/* 2. Frosted Glass (Primary content cards, rich background diffusion, transparent) */
+.glass-frosted,
+.glass-medium {
+  background: var(--glass-bg-frosted);
+  backdrop-filter: blur(var(--glass-blur-frosted)) saturate(200%) contrast(102%) brightness(101%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-frosted)) saturate(200%) contrast(102%) brightness(101%);
+  border: 1px solid var(--glass-border-frosted);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  box-shadow: var(--glass-shadow-soft), var(--glass-inner-light);
+}
+
+/* 3. Crystal Glass (High-index transparent crystal for hero panels & spotlights) */
+.glass-crystal,
+.floating-glass {
+  background: var(--glass-bg-crystal);
+  backdrop-filter: blur(var(--glass-blur-crystal)) saturate(210%) contrast(104%) brightness(102%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-crystal)) saturate(210%) contrast(104%) brightness(102%);
+  border: 1px solid var(--glass-border-crystal);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  box-shadow: var(--glass-shadow-elevated), var(--glass-inner-light);
+}
+
+/* 4. Deep Glass (Translucent darker material for modals and grounded panels) */
+.glass-deep {
+  background: var(--glass-bg-deep);
+  backdrop-filter: blur(var(--glass-blur-deep)) saturate(190%) contrast(102%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-deep)) saturate(190%) contrast(102%);
+  border: 1px solid var(--glass-border-deep);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  box-shadow: var(--glass-shadow-elevated), var(--glass-inner-light);
+}
+
+/* 5. Liquid Glass (Refractive caustics & environmental light dispersion) */
+.glass-liquid {
+  background: var(--glass-bg-liquid);
+  backdrop-filter: blur(var(--glass-blur-liquid)) saturate(220%) contrast(104%) brightness(102%);
+  -webkit-backdrop-filter: blur(var(--glass-blur-liquid)) saturate(220%) contrast(104%) brightness(102%);
+  border: 1px solid var(--glass-border-liquid);
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  box-shadow: var(--glass-shadow-elevated), var(--glass-inner-light);
+}
+
+/* Specular Internal Reflections - Clean monolithic refractive lighting */
+.liquid-sheen {
+  position: relative;
+  background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+}
+
+/* Gentle internal ambient optical refraction that respects border-radius exactly */
+.liquid-sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 24% 18%,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.02) 40%,
+    transparent 70%
+  );
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.dark .liquid-sheen::before {
+  background: radial-gradient(
+    circle at 24% 18%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.01) 40%,
+    transparent 70%
+  );
+  opacity: 0.75;
+}
+
+/* Liquid Glass 2.0 Spheres and Refraction */
+.liquid-glass-sphere-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  will-change: transform;
+}
+
+/* Primary specular crescent highlight */
+.liquid-specular-crescent {
+  position: absolute;
+  top: 10%;
+  left: 14%;
+  border-radius: 9999px;
+  transform: rotate(-35deg);
+  pointer-events: none;
+}
+
+/* Secondary specular pin-glint */
+.liquid-specular-pin {
+  position: absolute;
+  top: 26%;
+  left: 13%;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/* Bottom internal caustic bounce */
+.liquid-caustic-bounce {
+  position: absolute;
+  bottom: -6%;
+  right: -6%;
+  border-radius: 9999px;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Be Vietnam Pro', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:lang(zh) {
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+:lang(vi) {
+  letter-spacing: -0.01em;
+  line-height: 1.6;
+}
+
+/* User Selection matching current accent */
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Interactive elements reacting to accent */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-glow) !important;
+  outline: none;
+}
+
+/* Accent utilities */
+.accent-color {
+  color: var(--accent);
+}
+
+.accent-bg {
+  background-color: var(--accent);
+}
+
+.accent-border {
+  border-color: var(--accent-border);
+}
+
+.accent-glow-sm {
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.accent-glow-lg {
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+/* Butter-Smooth Hardware-Accelerated Float Keyframes (Natural 2D liquid drift) */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  35% {
+    transform: translate3d(6px, -12px, 0) scale(1.015);
+  }
+  70% {
+    transform: translate3d(-6px, -20px, 0) scale(1.025);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  40% {
+    transform: translate3d(-8px, 12px, 0) scale(0.985);
+  }
+  75% {
+    transform: translate3d(6px, 20px, 0) scale(0.975);
+  }
+}
+
+@keyframes floatMedium {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(8px, -15px, 0) scale(1.02);
+  }
+}
+
+@keyframes floatBubble {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4px, -14px, 0) scale(1.06);
+  }
+}
+
+@keyframes floatBubbleReverse {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-5px, 12px, 0) scale(0.95);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 12s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 14s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: floatMedium 10s ease-in-out infinite;
+}
+
+.animate-float-bubble {
+  animation: floatBubble 7s ease-in-out infinite;
+}
+
+.animate-float-bubble-reverse {
+  animation: floatBubbleReverse 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-reverse,
+  .animate-float-medium,
+  .animate-float-bubble,
+  .animate-float-bubble-reverse {
+    animation: none !important;
+  }
+}
+
+
+

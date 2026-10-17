@@ -1,0 +1,6 @@
+{
+  "name": "Personal Portfolio",
+  "description": "An Apple-grade personal portfolio crafted with liquid glass material design, 3D interactive physics, trilingual internationalization, and refined micro-interactions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
