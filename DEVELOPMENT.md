@@ -1,44 +1,50 @@
 # Potato UI development
 
-Open `#/development` from the portfolio navigation. Hash routing supports GitHub Pages and direct reloads without server rewrites. Development is loaded in a separate JavaScript/CSS chunk.
+The Liquid Glass catalog follows all 66 entries in the shadcn/ui Components index reviewed on 2026-10-17. This is Potato UI source with its own API, not a drop-in shadcn distribution.
 
-The catalog renders the actual GlassButton and GlassCard used in the portfolio. The header renders the existing PreferencesPopup. New primitives live in `src/components/GlassUI.tsx` with styles in `glass-ui.css`.
+## Open the catalog
+
+- Overview: `#/development`
+- Component: `#/development/<slug>` (for example `#/development/data-table`)
+- Setup: `#/development/installation`
+- Tokens: `#/development/theming`
+- Existing portfolio components: `#/development/website-components`
+
+Hash routing works with GitHub Pages and reloads. Development remains lazy-loaded, keeping Radix and catalog code out of the initial portfolio bundle.
 
 ## Reuse
 
-This is source code, not an npm package or a shadcn registry. Use React 19, TypeScript, Tailwind CSS 4, motion and lucide-react as declared in package.json. Copy components and their relative dependencies (`hooks`, `styles`, `types`, `i18n`, `locales`) and import `src/index.css`. Wrap the application in I18nProvider and ThemeProvider as shown in App.tsx. GlassUI imports its own stylesheet.
+Install dependencies from package.json (React 19, Tailwind CSS 4, Motion, Lucide, radix-ui). Copy `components`, `hooks`, `styles`, `types`, `i18n`, `locales` and `index.css`, preserving relative imports. Wrap your application in I18nProvider and ThemeProvider. UI modules import their own styles. Every component page includes a complete TSX example, a source link, a concise API, dependencies and behavior notes. This repository is not an npm package or CLI registry.
 
-```tsx
-import { useState } from 'react';
-import { GlassCard } from './components/GlassCard';
-import { GlassSwitch, GlassInput } from './components/GlassUI';
+## Module map
 
-export function Settings() {
-  const [enabled, setEnabled] = useState(true);
-  return <GlassCard>
-    <label>Email<GlassInput type="email" required /></label>
-    <GlassSwitch label="Notifications" checked={enabled} onCheckedChange={setEnabled} />
-  </GlassCard>;
-}
-```
+- `src/components/GlassButton.tsx`, `GlassCard.tsx`, `GlassUI.tsx`: existing foundation.
+- `src/components/ui/controls.tsx`: form primitives and input composition.
+- `src/components/ui/overlays.tsx`: Radix popups, menus, selection, toast and panels.
+- `src/components/ui/data.tsx`: calendar, date picker, table, chart, carousel, pagination and resizable panels.
+- `src/components/ui/content.tsx`: content, conversation and layout components.
+- `src/development/catalog.ts`: documentation metadata and copyable usage examples.
+- `src/development/demos.tsx`: live component demonstrations.
 
-## Component API
+## Coverage
 
-| Component | Props |
+| Category | Components |
 | --- | --- |
-| GlassButton | variant: primary / secondary / glass / ghost / outline; size: sm / md / lg; isLoading; disabled; iconLeft; iconRight; native motion button props |
-| GlassCard | level: clear / frosted / crystal / deep / liquid; interactive; tilt; glare; reveal; padding: none / sm / md / lg; motion div props |
-| GlassInput / GlassTextarea / GlassSelect | Native HTML props, including id, name, required, disabled, aria-invalid and aria-describedby; associate visible labels |
-| GlassBadge | tone: neutral / accent / success; children |
-| GlassSwitch | checked: boolean; onCheckedChange: (boolean) => void; label: string; disabled?: boolean |
-| GlassTabs | items: { label: string; content: ReactNode }[]; provide at least one item |
-| GlassAccordion | items: { title: string; content: ReactNode }[] |
-| GlassDialog | trigger: string; title: string; children: ReactNode |
-| GlassAlert | title: string; children: ReactNode; static informational note |
-| GlassProgress | value: number (clamped 0–100); label: string |
+| Foundation | Aspect Ratio, Avatar, Badge, Button, Button Group, Card, Direction, Kbd, Progress, Resizable, Scroll Area, Separator, Skeleton, Spinner, Typography |
+| Forms | Checkbox, Combobox, Date Picker, Field, Input, Input Group, Input OTP, Label, Native Select, Questionnaire, Radio Group, Select, Slider, Switch, Textarea, Toggle, Toggle Group |
+| Navigation | Breadcrumb, Command, Menubar, Navigation Menu, Pagination, Sidebar, Tabs |
+| Overlays | Alert Dialog, Context Menu, Dialog, Drawer, Dropdown Menu, Hover Card, Popover, Sheet, Toast, Tooltip |
+| Data | Calendar, Carousel, Chart, Data Table, Table |
+| Content | Accordion, Alert, Attachment, Bubble, Code Block, Collapsible, Empty, Item, Marker, Message, Message Scroller, Trace |
 
-Tabs use roving focus with arrows/Home/End. Dialog uses native showModal for focus trapping, Escape dismissal and focus restoration. Accordion and Select use native keyboard behavior. Motion on Switch is disabled for reduced-motion preferences. Use semantic labels and real text for statuses.
+## Scope and accessibility
 
-Theme values are inherited from the existing CSS custom properties: `--accent`, `--color-accent-subtle`, `--accent-border`, `--color-text-primary`, `--glass-bg-frosted`, `--glass-blur-md`, and the glass material classes. Keep these dependencies when copying code.
+Radix handles keyboard/focus behavior in menus, select, dialogs, popovers, radio, checkbox, toggle, slider and toast. Native elements handle dialog, accordion, collapsible, datalist, inputs and form validation. Calendar implements day/week keyboard navigation; Resizable supports pointer and keyboard input. Static skeletons are hidden from assistive technology; containers supply loading labels. Reduced motion is supported by CSS and the existing Motion hooks.
 
-Run `npm test` and `GITHUB_PAGES=true npm run build` before publishing. The existing preview workflow deploys the `codex/portfolio-pages-preview` branch.
+The chart is a nonnegative bar-chart implementation with an accessible data table, not the full range of shadcn chart types. Data Table filtering/sorting/pagination is client-side. Drawer is a bottom dialog without drag-to-dismiss. Combobox uses a native datalist and permits free text. Command is a searchable action list navigated with Tab/Enter, not an application-global shortcut. OTP is a single numeric text field with paste/autofill, not a verification backend. Message/Trace/Questionnaire are reusable display/form components without an AI or server integration. Each page states these boundaries.
+
+## Validation
+
+Run `npm test` and `GITHUB_PAGES=true npm run build`. The catalog tests render every demo, typecheck every copyable example against actual exports, check unique routes and validate boundary cases. Existing contact tests remain in place. Browser verification should cover portal overlays, keyboard controls, clipboard, navigation, filtering and responsive layouts.
+
+The existing preview workflow publishes `codex/portfolio-pages-preview`.
