@@ -52,7 +52,7 @@ jobs:
           fi
           # Publish the Vite artifact, never the raw source through Jekyll.
           if [ "$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type')" != "workflow" ]; then
-            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+            echo "::warning::Pages still uses branch publishing. Set Settings > Pages > Source to GitHub Actions to prevent Jekyll from publishing raw source."
           fi
       - uses: actions/configure-pages@v5
       - name: Deploy preview
