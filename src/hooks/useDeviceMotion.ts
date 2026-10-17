@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useReducedMotion } from 'motion/react';
 
-export function useDeviceMotion() {
+export function useDeviceMotion(trackPointer = false) {
   const prefersReduced = useReducedMotion();
   const [isTouch, setIsTouch] = useState<boolean>(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 }); // -1 to 1 normalized
@@ -22,7 +22,7 @@ export function useDeviceMotion() {
 
     // Track smoothed mouse position on desktop only with rAF throttling
     const handleMouseMove = (e: MouseEvent) => {
-      if (prefersReduced || isTouch || ticking.current) return;
+      if (!trackPointer || prefersReduced || isTouch || ticking.current) return;
 
       ticking.current = true;
       requestAnimationFrame(() => {
@@ -41,13 +41,13 @@ export function useDeviceMotion() {
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    if (trackPointer) window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('resize', checkTouch);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [prefersReduced, isTouch]);
+  }, [prefersReduced, isTouch, trackPointer]);
 
   return {
     isTouch,
@@ -55,4 +55,5 @@ export function useDeviceMotion() {
     mousePos,
   };
 }
+
 

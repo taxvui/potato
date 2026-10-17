@@ -1,6 +1,7 @@
 import { TranslationType } from './en';
 
 export const zh: TranslationType = {
+  preview: {"skip": "跳转到主要内容", "preview": "设计预览 · 个人资料和项目为示例内容", "mail": "打开邮件应用", "hint": "将在邮件应用中打开，请在那里检查并发送。", "unconfigured": "此预览尚未配置联系邮箱，不会发送消息。", "unavailable": "此预览暂不可用", "copyFailed": "无法复制，请手动选择并复制邮箱地址。"},
   nav: {
     home: '首页',
     hero: '首页',
@@ -202,3 +203,4 @@ export const zh: TranslationType = {
     close: '关闭偏好设置',
   },
 };
+

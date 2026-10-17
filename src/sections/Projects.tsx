@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { isPublishedUrl } from '../config/site';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, Sparkles } from 'lucide-react';
 import { Section } from '../components/Section';
@@ -46,6 +47,7 @@ export const Projects: React.FC = () => {
               key={opt.key}
               id={`project-filter-${opt.key.toLowerCase().replace(/[^a-z0-9]/g, '')}`}
               onClick={() => setSelectedFilter(opt.key)}
+              aria-pressed={isActive}
               whileHover={{ scale: prefersReducedMotion ? 1 : 1.03 }}
               whileTap={{ scale: prefersReducedMotion ? 1 : 0.97 }}
               className={`relative px-4 py-2 rounded-xl text-xs font-semibold transition-colors duration-200 cursor-pointer ${
@@ -226,7 +228,9 @@ export const Projects: React.FC = () => {
                       size="sm"
                       variant="primary"
                       magnetic
-                      onClick={() => window.open(project.demoUrl || '#', '_blank')}
+                      disabled={!isPublishedUrl(project.demoUrl)}
+                      title={!isPublishedUrl(project.demoUrl) ? t.preview.unavailable : undefined}
+                      onClick={() => window.open(project.demoUrl, '_blank', 'noopener,noreferrer')}
                       iconRight={<ExternalLink className="w-4 h-4" strokeWidth={2.3} />}
                     >
                       {t.projects.viewDemo}
@@ -237,7 +241,9 @@ export const Projects: React.FC = () => {
                       size="sm"
                       variant="secondary"
                       magnetic
-                      onClick={() => window.open(project.githubUrl || '#', '_blank')}
+                      disabled={!isPublishedUrl(project.githubUrl)}
+                      title={!isPublishedUrl(project.githubUrl) ? t.preview.unavailable : undefined}
+                      onClick={() => window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
                       iconLeft={<Github className="w-4 h-4" strokeWidth={2.3} />}
                     >
                       {t.projects.viewCode}
@@ -252,3 +258,4 @@ export const Projects: React.FC = () => {
     </Section>
   );
 };
+

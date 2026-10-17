@@ -1,4 +1,5 @@
 export const en = {
+  preview: {"skip": "Skip to content", "preview": "Design preview · Sample profile and project content", "mail": "Open email app", "hint": "This opens your email app. Review and send the message there.", "unconfigured": "Contact is not configured for this preview. No message will be sent.", "unavailable": "Not available in this preview", "copyFailed": "Could not copy. Select the email address to copy it manually."},
   nav: {
     home: 'Home',
     hero: 'Home',
@@ -202,3 +203,4 @@ export const en = {
 };
 
 export type TranslationType = typeof en;
+

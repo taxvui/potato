@@ -1,6 +1,7 @@
 import { TranslationType } from './en';
 
 export const vi: TranslationType = {
+  preview: {"skip": "Đến nội dung chính", "preview": "Bản xem thử thiết kế · Hồ sơ và dự án là dữ liệu mẫu", "mail": "Mở ứng dụng email", "hint": "Ứng dụng email sẽ mở để bạn kiểm tra và tự gửi thư.", "unconfigured": "Bản xem thử chưa cấu hình email liên hệ. Tin nhắn sẽ không được gửi.", "unavailable": "Chưa có trong bản xem thử", "copyFailed": "Không sao chép được. Bạn có thể chọn địa chỉ email để sao chép thủ công."},
   nav: {
     home: 'Trang chủ',
     hero: 'Trang chủ',
@@ -202,3 +203,4 @@ export const vi: TranslationType = {
     close: 'Đóng tùy chỉnh',
   },
 };
+

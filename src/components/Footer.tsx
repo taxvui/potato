@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
   const isDark = theme === 'dark';
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
 
   const navLinks: { id: SectionId; label: string }[] = [
@@ -132,3 +132,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+

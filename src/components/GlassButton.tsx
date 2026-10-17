@@ -111,8 +111,8 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
         damping: 22,
         mass: 0.5,
       }}
-      whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
-      whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
+      whileHover={{ scale: disabled || isLoading || prefersReducedMotion ? 1 : 1.02 }}
+      whileTap={{ scale: disabled || isLoading || prefersReducedMotion ? 1 : 0.98 }}
       disabled={disabled || isLoading}
       style={{
         ...primaryInlineStyle,
@@ -185,3 +185,4 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
     </motion.button>
   );
 };
+

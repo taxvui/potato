@@ -114,28 +114,5 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 ];
 
 export const SOCIAL_LINKS = [
-  {
-    name: 'GitHub',
-    url: 'https://github.com',
-    icon: 'Github',
-    handle: '@alexchen-dev',
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://linkedin.com',
-    icon: 'Linkedin',
-    handle: 'linkedin.com/in/alexchen',
-  },
-  {
-    name: 'Twitter / X',
-    url: 'https://twitter.com',
-    icon: 'Twitter',
-    handle: '@alexchen_tech',
-  },
-  {
-    name: 'Email',
-    url: 'mailto:alex.chen.architect@example.com',
-    icon: 'Mail',
-    handle: 'alex.chen.architect@example.com',
-  },
+  { name: 'GitHub', url: 'https://github.com/taxvui', icon: 'Github', handle: '@taxvui' },
 ];

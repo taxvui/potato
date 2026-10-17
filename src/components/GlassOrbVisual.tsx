@@ -9,7 +9,7 @@ import { BrandLogo } from './BrandLogo';
 export const GlassOrbVisual: React.FC = () => {
   const { theme, accentConfig } = useTheme();
   const { t } = useI18n();
-  const { isTouch, prefersReducedMotion, mousePos } = useDeviceMotion();
+  const { isTouch, prefersReducedMotion, mousePos } = useDeviceMotion(true);
   const isDark = theme === 'dark';
 
   return (
@@ -373,3 +373,4 @@ export const GlassOrbVisual: React.FC = () => {
     </div>
   );
 };
+

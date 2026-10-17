@@ -1,0 +1,54 @@
+name: Portfolio preview
+on:
+  push:
+    branches: [main, codex/portfolio-pages-preview]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-preview-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          GITHUB_PAGES: 'true'
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_RESUME_URL: ${{ vars.VITE_RESUME_URL }}
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/codex/portfolio-pages-preview' && github.event_name != 'pull_request'
+        with:
+          path: dist
+  deploy:
+    if: github.ref == 'refs/heads/codex/portfolio-pages-preview' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Inspect or enable GitHub Pages using GitHub CLI
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh --version
+          if ! gh api "repos/$GITHUB_REPOSITORY/pages"; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/pages" -f build_type=workflow
+          fi
+      - uses: actions/configure-pages@v5
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4

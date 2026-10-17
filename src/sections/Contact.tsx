@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { siteConfig, contactMailto } from '../config/site';
 import { Mail, MapPin, Send, Check, Copy, Clock, MessageSquare } from 'lucide-react';
 import { Section } from '../components/Section';
 import { GlassCard } from '../components/GlassCard';
@@ -20,30 +21,23 @@ export const Contact: React.FC = () => {
     message: '',
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copyError, setCopyError] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
-  const contactEmail = 'alex.chen.architect@example.com';
+  const contactEmail = siteConfig.contactEmail;
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(contactEmail);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopiedEmail(true);
+      setCopyError(false);
+    } catch { setCopyError(true); }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setIsSubmitting(true);
-    // Simulate real communication response
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setIsSubmitted(false), 6000);
-    }, 1200);
+    if (!contactEmail || !formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
+    window.location.href = contactMailto(contactEmail, formData);
   };
 
   return (
@@ -93,10 +87,11 @@ export const Contact: React.FC = () => {
                     >
                       <Mail className="w-4 h-4 drop-shadow-xs" strokeWidth={2.4} />
                     </div>
-                    <span className="font-mono text-xs truncate select-all text-slate-800 dark:text-slate-200">{contactEmail}</span>
+                    <span className="font-mono text-xs truncate select-all text-slate-800 dark:text-slate-200">{contactEmail || t.preview.unavailable}</span>
                   </div>
                   <button
                     id="contact-copy-email-btn"
+                    disabled={!contactEmail}
                     onClick={handleCopyEmail}
                     className="p-2 rounded-lg hover:bg-slate-700/20 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors shrink-0 cursor-pointer"
                     title={copiedEmail ? t.contact.copied : t.contact.copyTooltip}
@@ -236,18 +231,10 @@ export const Contact: React.FC = () => {
               </h3>
             </div>
 
-            {isSubmitted ? (
-              <div
-                className={`p-6 rounded-2xl border text-center space-y-3 ${
-                  isDark ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300' : 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                }`}
-              >
-                <div className="w-10 h-10 mx-auto rounded-full bg-emerald-500/20 flex items-center justify-center">
-                  <Check className="w-5 h-5 text-emerald-400" />
-                </div>
-                <p className="text-sm font-medium">{t.contact.successMessage}</p>
-              </div>
-            ) : (
+            <p role="status" className="mb-5 text-sm text-slate-500 dark:text-slate-400">
+              {contactEmail ? t.preview.hint : t.preview.unconfigured}
+              {copyError && <span className="block">{t.preview.copyFailed}</span>}
+            </p>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -357,18 +344,18 @@ export const Contact: React.FC = () => {
                     size="lg"
                     variant="primary"
                     magnetic
-                    isLoading={isSubmitting}
+                    disabled={!contactEmail}
                     iconRight={<Send className="w-4 h-4" />}
                     className="w-full sm:w-auto"
                   >
-                    {isSubmitting ? t.contact.sending : t.contact.sendMessage}
+                    {t.preview.mail}
                   </GlassButton>
                 </div>
               </form>
-            )}
           </GlassCard>
         </div>
       </div>
     </Section>
   );
 };
+

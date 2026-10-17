@@ -1,4 +1,5 @@
 import React from 'react';
+import { useI18n } from './hooks/useI18n';
 import { I18nProvider } from './i18n';
 import { ThemeProvider, useTheme } from './hooks/useTheme';
 import { BackgroundGlass3D } from './components/BackgroundGlass3D';
@@ -14,6 +15,7 @@ import { Contact } from './sections/Contact';
 
 const PortfolioLayout: React.FC = () => {
   const { theme } = useTheme();
+  const { t } = useI18n();
   const isDark = theme === 'dark';
 
   return (
@@ -22,6 +24,7 @@ const PortfolioLayout: React.FC = () => {
         isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
+      <a href="#main-content" className="skip-link">{t.preview.skip}</a>
       {/* Dynamic 3D Liquid Glass Background (Step 3: Background + bóng kính 3D) */}
       <BackgroundGlass3D />
 
@@ -29,7 +32,8 @@ const PortfolioLayout: React.FC = () => {
       <Navbar />
 
       {/* Main Content Sections */}
-      <main className="relative z-10">
+      <main id="main-content" tabIndex={-1} className="relative z-10">
+        <div className="absolute top-24 inset-x-0 text-center text-[10px] tracking-wide text-slate-500 px-4">{t.preview.preview}</div>
         <Hero />
         <About />
         <Skills />
@@ -56,3 +60,4 @@ export default function App() {
     </I18nProvider>
   );
 }
+

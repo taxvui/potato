@@ -167,6 +167,8 @@ export const Navbar: React.FC = () => {
                 : 'text-slate-800 hover:text-slate-950 hover:bg-white/80'
             }`}
             aria-label={t.nav.toggleMenu}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" strokeWidth={2.3} /> : <Menu className="w-4 h-4" strokeWidth={2.3} />}
           </button>
@@ -177,6 +179,7 @@ export const Navbar: React.FC = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -234,3 +237,4 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
